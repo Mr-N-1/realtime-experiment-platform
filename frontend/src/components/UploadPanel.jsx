@@ -1,9 +1,10 @@
 import { useState } from "react";
 
+const API_BASE = "http://127.0.0.1:8000";
+
 export default function UploadPanel({ onIngestComplete }) {
   const [file, setFile] = useState(null);
   const [columns, setColumns] = useState([]);
-  const [preview, setPreview] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [mapping, setMapping] = useState({
@@ -26,15 +27,19 @@ export default function UploadPanel({ onIngestComplete }) {
     formData.append("file", file);
 
     setLoading(true);
+
     try {
-      const res = await fetch("http://127.0.0.1:8001/upload/preview", {
+      const res = await fetch(`${API_BASE}/upload/preview`, {
         method: "POST",
         body: formData,
       });
+
+      if (!res.ok) throw new Error("Preview failed");
+
       const data = await res.json();
       setColumns(data.columns || []);
-      setPreview(data.preview || []);
-    } catch {
+    } catch (err) {
+      console.error(err);
       alert("Preview failed");
     } finally {
       setLoading(false);
@@ -43,19 +48,31 @@ export default function UploadPanel({ onIngestComplete }) {
 
   // ---------- Ingest ----------
   const ingestData = async () => {
+    if (!file) {
+      alert("Select a file first");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("mapping", JSON.stringify(mapping));
 
     setLoading(true);
+
     try {
-      await fetch("http://127.0.0.1:8001/upload/ingest", {
+      const res = await fetch(`${API_BASE}/upload/ingest`, {
         method: "POST",
         body: formData,
       });
-      alert("✅ Data ingested");
-      onIngestComplete(); // refresh dashboard
-    } catch {
+
+      if (!res.ok) throw new Error("Ingest failed");
+
+      const data = await res.json();
+
+      alert(`✅ Ingested ${data.rows_ingested || 0} rows`);
+      onIngestComplete();
+    } catch (err) {
+      console.error(err);
       alert("Ingest failed");
     } finally {
       setLoading(false);
@@ -74,12 +91,8 @@ export default function UploadPanel({ onIngestComplete }) {
         boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
       }}
     >
-      <h3 style={{ marginBottom: "12px" }}>📤 Upload Experiment Data</h3>
-      <p style={{ fontSize: "14px", color: "#64748b" }}>
-        Upload CSV or JSON and map columns
-      </p>
+      <h3>📤 Upload Experiment Data</h3>
 
-      {/* File Input */}
       <input
         type="file"
         accept=".csv,.json"
@@ -113,14 +126,16 @@ export default function UploadPanel({ onIngestComplete }) {
               >
                 <option value="">Select</option>
                 {columns.map((c) => (
-                  <option key={c}>{c}</option>
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
                 ))}
               </select>
             </div>
           ))}
 
           <input
-            placeholder="Metric name (e.g. energy_efficiency)"
+            placeholder="Metric name"
             style={inputStyle}
             onChange={(e) =>
               setMapping({ ...mapping, metric_name: e.target.value })
@@ -128,7 +143,7 @@ export default function UploadPanel({ onIngestComplete }) {
           />
 
           <input
-            placeholder="Unit (e.g. km/kWh)"
+            placeholder="Unit"
             style={inputStyle}
             onChange={(e) =>
               setMapping({ ...mapping, unit: e.target.value })
@@ -144,12 +159,11 @@ export default function UploadPanel({ onIngestComplete }) {
         </>
       )}
 
-      {loading && <p style={{ marginTop: "10px" }}>⏳ Processing...</p>}
+      {loading && <p>⏳ Processing...</p>}
     </div>
   );
 }
 
-// ---------- Styles ----------
 const btnPrimary = {
   width: "100%",
   padding: "10px",
