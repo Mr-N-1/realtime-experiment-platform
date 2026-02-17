@@ -1,138 +1,26 @@
-/* ---------------- RESET & BASE ---------------- */
-* {
-  box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-}
-
-/* ---------------- THEME VARIABLES ---------------- */
-/* LIGHT THEME */
-.light {
+:root {
   --bg: #f8fafc;
   --card: #ffffff;
+  --border: #e2e8f0;
   --text: #0f172a;
-  --muted: #64748b;
-  --border: #e5e7eb;
-  --primary: #2563eb;
-  --accent: #10b981;
+  --primary: #4f46e5;
 }
 
-/* DARK THEME */
 .dark {
-  --bg: #020617;
-  --card: #020617;
-  --text: #e5e7eb;
-  --muted: #94a3b8;
-  --border: #1e293b;
-  --primary: #3b82f6;
-  --accent: #22c55e;
+  --bg: #0f172a;
+  --card: #1e293b;
+  --border: #334155;
+  --text: #e2e8f0;
+  --primary: #6366f1;
 }
 
-/* ---------------- GLOBAL STYLES ---------------- */
-.light,
-.dark {
-  background-color: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-
-/* ---------------- TEXT ---------------- */
-h1,
-h2,
-h3,
-h4,
-h5 {
-  margin: 0;
-  color: var(--text);
-}
-
-p {
-  margin: 0;
-  color: var(--muted);
-}
-
-/* ---------------- LINKS ---------------- */
-a {
-  color: var(--primary);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* ---------------- BUTTONS ---------------- */
-button {
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  padding: 8px 14px;
-  font-size: 14px;
-  font-family: inherit;
-  background-color: var(--card);
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-button:hover {
-  background-color: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-/* ---------------- INPUTS ---------------- */
-input,
-select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background-color: var(--card);
-  color: var(--text);
-}
-
-input::placeholder {
-  color: var(--muted);
-}
-
-/* ---------------- TABLE ---------------- */
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 10px;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-
-thead {
-  background-color: var(--card);
-}
-
-/* ---------------- SCROLLBAR (OPTIONAL POLISH) ---------------- */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
+body {
   background: var(--bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
 }
