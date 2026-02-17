@@ -1,31 +1,33 @@
 import { NavLink } from "react-router-dom";
 
+const linkStyle = {
+  display: "block",
+  padding: "12px 16px",
+  textDecoration: "none",
+  color: "#cbd5e1",
+  borderRadius: "8px",
+  marginBottom: "6px",
+};
+
 export default function Sidebar() {
-  const links = [
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Upload Dataset", path: "/upload" },
-    { name: "Live Stream", path: "/streams" },
-    { name: "Experiments", path: "/experiments" },
-    { name: "Analytics", path: "/analytics" },
-    { name: "Reports", path: "/reports" },
-    { name: "Settings", path: "/settings" },
-  ];
-
   return (
-    <aside className="w-64 bg-slate-900 text-white p-6 min-h-screen">
-      <h2 className="text-2xl font-bold mb-8">⚡ RTViz</h2>
+    <aside
+      style={{
+        width: "240px",
+        background: "#0f172a",
+        padding: "20px",
+        color: "white",
+      }}
+    >
+      <h2 style={{ marginBottom: "30px" }}>⚡ RTViz</h2>
 
-      <nav className="space-y-3">
-        {links.map((link) => (
-          <NavLink
-            key={link.name}
-            to={link.path}
-            className="block px-3 py-2 rounded-lg hover:bg-slate-800 transition"
-          >
-            {link.name}
-          </NavLink>
-        ))}
-      </nav>
+      <NavLink to="/" style={linkStyle}>Dashboard</NavLink>
+      <NavLink to="/upload" style={linkStyle}>Upload</NavLink>
+      <NavLink to="/streams" style={linkStyle}>Streams</NavLink>
+      <NavLink to="/experiments" style={linkStyle}>Experiments</NavLink>
+      <NavLink to="/analytics" style={linkStyle}>Analytics</NavLink>
+      <NavLink to="/reports" style={linkStyle}>Reports</NavLink>
+      <NavLink to="/settings" style={linkStyle}>Settings</NavLink>
     </aside>
   );
 }

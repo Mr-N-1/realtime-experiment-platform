@@ -1,27 +1,23 @@
-import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
-
 export default function TopNavbar() {
-  const { dark, setDark } = useContext(ThemeContext);
-
   return (
-    <header className="flex justify-between items-center bg-[var(--card)] border-b border-[var(--border)] px-6 py-4">
-      <h1 className="text-xl font-semibold">
+    <div
+      style={{
+        height: "60px",
+        background: "#ffffff",
+        borderBottom: "1px solid #e2e8f0",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0 24px",
+      }}
+    >
+      <div style={{ fontWeight: "600" }}>
         Real-Time Big Data Visualization
-      </h1>
-
-      <div className="flex items-center gap-6">
-        <span className="px-3 py-1 bg-green-500 text-white text-sm rounded-full">
-          Live
-        </span>
-
-        <button
-          onClick={() => setDark(!dark)}
-          className="px-3 py-2 bg-indigo-600 text-white rounded-lg"
-        >
-          {dark ? "Light Mode" : "Dark Mode"}
-        </button>
       </div>
-    </header>
+
+      <div>
+        🟢 Live
+      </div>
+    </div>
   );
 }
