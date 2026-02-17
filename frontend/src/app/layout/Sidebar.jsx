@@ -1,33 +1,49 @@
 import { NavLink } from "react-router-dom";
 
-const linkStyle = {
-  display: "block",
-  padding: "12px 16px",
-  textDecoration: "none",
-  color: "#cbd5e1",
-  borderRadius: "8px",
-  marginBottom: "6px",
-};
-
 export default function Sidebar() {
+  const navItems = [
+    { name: "Dashboard", path: "/" },
+    { name: "Upload", path: "/upload" },
+    { name: "Streams", path: "/streams" },
+    { name: "Experiments", path: "/experiments" },
+    { name: "Analytics", path: "/analytics" },
+    { name: "Reports", path: "/reports" },
+    { name: "Settings", path: "/settings" },
+  ];
+
   return (
     <aside
       style={{
-        width: "240px",
+        width: "250px",
         background: "#0f172a",
-        padding: "20px",
-        color: "white",
+        color: "#ffffff",
+        padding: "28px 18px",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <h2 style={{ marginBottom: "30px" }}>⚡ RTViz</h2>
+      <h2 style={{ marginBottom: "40px", fontWeight: 700 }}>
+        ⚡ RTViz
+      </h2>
 
-      <NavLink to="/" style={linkStyle}>Dashboard</NavLink>
-      <NavLink to="/upload" style={linkStyle}>Upload</NavLink>
-      <NavLink to="/streams" style={linkStyle}>Streams</NavLink>
-      <NavLink to="/experiments" style={linkStyle}>Experiments</NavLink>
-      <NavLink to="/analytics" style={linkStyle}>Analytics</NavLink>
-      <NavLink to="/reports" style={linkStyle}>Reports</NavLink>
-      <NavLink to="/settings" style={linkStyle}>Settings</NavLink>
+      {navItems.map((item) => (
+        <NavLink
+          key={item.name}
+          to={item.path}
+          style={({ isActive }) => ({
+            padding: "10px 14px",
+            borderRadius: "8px",
+            marginBottom: "8px",
+            textDecoration: "none",
+            fontWeight: 500,
+            color: isActive ? "#ffffff" : "#cbd5e1",
+            background: isActive ? "#1e293b" : "transparent",
+            transition: "all 0.2s ease",
+          })}
+        >
+          {item.name}
+        </NavLink>
+      ))}
     </aside>
   );
 }
